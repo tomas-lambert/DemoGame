@@ -38,7 +38,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        PlayerGravity();
+        RotatePlayer();
+        PlayerMoves();
+        //PlayerJump();
+        //JumpCooldownVerification();
     }
 
       //Methods ----------------------------->
@@ -99,11 +103,38 @@ public class PlayerController : MonoBehaviour
     }
 
     //Player Rotation
-    private void RotatePlayer()
-    {
+    private void RotatePlayer(){
         cameraAxis += Input.GetAxis("Mouse X");
         Quaternion angulo = Quaternion.Euler(0f,cameraAxis,0f);
         transform.localRotation = angulo;
+
+    }
+     //Animations -------------------------------------------------------------------->
+
+    private void AnimationValidation(){
+        
+        //Walk
+        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) ){
+            PlayerAnimator.SetBool("isWalk", true);
+        }
+        if(Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) ){
+            PlayerAnimator.SetBool("isWalk", false);
+        }
+
+        //Run
+        if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftControl)){
+            PlayerAnimator.SetBool("isRun", true);
+        }
+        if(Input.GetKeyUp(KeyCode.LeftControl)){
+            PlayerAnimator.SetBool("isRun", false);
+        }
+
+        //Kick
+        if(Input.GetKeyDown(KeyCode.G)){
+            PlayerAnimator.SetBool("coudKick", true);
+        }else{
+            PlayerAnimator.SetBool("coudKick", false);
+        }
 
     }
 }
