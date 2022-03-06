@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -46,9 +47,9 @@ public class PlayerController : MonoBehaviour
         AnimationValidation();
     }
 
-      //Methods ----------------------------->
+      //Methods -------------------------------------------------------------------------------->
 
-    // Player Moves
+    // Player Moves---------------------------->
 
     public void PlayerMoves()
     {
@@ -109,6 +110,16 @@ public class PlayerController : MonoBehaviour
         Quaternion angulo = Quaternion.Euler(0f,cameraAxis,0f);
         transform.localRotation = angulo;
 
+    }
+
+    //Collitions -------------------------------------------------------------------->
+
+    //With Buffs
+    private void OnControllerColliderHit(ControllerColliderHit hit) {
+        if (hit.gameObject.CompareTag("Void"))
+        {
+            Debug.Log("You Dead");
+        }
     }
      //Animations -------------------------------------------------------------------->
 
