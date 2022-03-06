@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         ccPlayer = GetComponent<CharacterController>();
+        
     }
 
     // Update is called once per frame
@@ -114,11 +115,22 @@ public class PlayerController : MonoBehaviour
 
     //Collitions -------------------------------------------------------------------->
 
-    //With Buffs
+    //With Void
     private void OnControllerColliderHit(ControllerColliderHit hit) {
         if (hit.gameObject.CompareTag("Void"))
         {
             Debug.Log("You Dead");
+            transform.position = FindObjectOfType<SavePointsManager>().GetSavePoint(GameManager.instance.lastSavePoint).position;
+        } 
+    }
+
+    // With Save Point
+     private void OnTriggerEnter(Collider other) {
+         if (other.gameObject.CompareTag("SavePoint"))
+        {
+            Debug.Log("Save Progress");
+            SavePointsManager managerSavePoint = other.transform.parent.GetComponent<SavePointsManager>();
+            managerSavePoint.FindSavePoint(other.name);
         }
     }
      //Animations -------------------------------------------------------------------->

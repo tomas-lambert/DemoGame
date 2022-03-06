@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Void
+  - SavePoint
   layers:
   - Default
   - TransparentFX
