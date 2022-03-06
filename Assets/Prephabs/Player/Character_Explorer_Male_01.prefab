@@ -1401,6 +1401,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4435402632355884}
   - component: {fileID: 95810303219782666}
+  - component: {fileID: 4158501988778638918}
+  - component: {fileID: 5514085537571107106}
   m_Layer: 0
   m_Name: Character_Explorer_Male_01
   m_TagString: Player
@@ -1422,6 +1424,7 @@ Transform:
   - {fileID: 4459805594297010}
   - {fileID: 4289557471145190}
   - {fileID: 4352401650172076}
+  - {fileID: 345092830088390595}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1434,8 +1437,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1669957847032716}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 68923c6eec30d4a40ba4aae6cb5c059c, type: 3}
-  m_Controller: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: e531a48862ae52f4d922037820db553b, type: 3}
+  m_Controller: {fileID: 9100000, guid: dcc991aa29778c343bb5b7e355fe9ce4, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1444,6 +1447,42 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!143 &4158501988778638918
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669957847032716}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.4
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &5514085537571107106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669957847032716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35602ee4d200d946b2aa1fb53f65575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSpeed: 10
+  playerSprintSpeed: 1.5
+  cooldownJump: 2
+  JumpHeigth: 2
+  GravityForce: -9.81
+  PlayerAnimator: {fileID: 95810303219782666}
 --- !u!1 &1684661768486454
 GameObject:
   m_ObjectHideFlags: 0
@@ -2491,3 +2530,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8544634038207411768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 345092830088390595}
+  m_Layer: 0
+  m_Name: SeePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &345092830088390595
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8544634038207411768}
+  m_LocalRotation: {x: 0.11634635, y: -0, z: -0, w: 0.9932087}
+  m_LocalPosition: {x: 0, y: 1.59, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4435402632355884}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 13.363, y: 0, z: 0}

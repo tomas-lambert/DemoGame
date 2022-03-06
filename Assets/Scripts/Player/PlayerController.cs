@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     //Time To Jump
     private float resetJumpTimer = 0f;
     [SerializeField] private float cooldownJump = 2f;
-    private bool jumpOn =false;
+    private bool jumpOn = false;
     [SerializeField] private float JumpHeigth = 2f;
 
     //Gravity Force
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-         ccPlayer = GetComponent<CharacterController>();
+        ccPlayer = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -41,8 +41,9 @@ public class PlayerController : MonoBehaviour
         PlayerGravity();
         RotatePlayer();
         PlayerMoves();
-        //PlayerJump();
-        //JumpCooldownVerification();
+        PlayerJump();
+        JumpCooldownVerification();
+        AnimationValidation();
     }
 
       //Methods ----------------------------->
@@ -84,12 +85,12 @@ public class PlayerController : MonoBehaviour
     }
     public void PlayerJump(){
 
-        if((Input.GetKeyDown(KeyCode.Space) && ccPlayer.isGrounded && !jumpOn) || (Input.GetKeyDown(KeyCode.Space) && Input.GetKey(KeyCode.W) && ccPlayer.isGrounded && !jumpOn) || (Input.GetKeyDown(KeyCode.Space) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftControl) && ccPlayer.isGrounded && !jumpOn) ){
+        if(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftControl)){
             jumpOn = true;
             velocity.y = Mathf.Sqrt(-JumpHeigth * GravityForce);
-            PlayerAnimator.SetBool("isJump", true);
+            
         }else{
-            PlayerAnimator.SetBool("isJump", false);
+            PlayerAnimator.SetBool("canJump", false);
         }
         
     }
@@ -115,10 +116,10 @@ public class PlayerController : MonoBehaviour
         
         //Walk
         if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) ){
-            PlayerAnimator.SetBool("isWalk", true);
+            PlayerAnimator.SetBool("isWalking", true);
         }
         if(Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D) ){
-            PlayerAnimator.SetBool("isWalk", false);
+            PlayerAnimator.SetBool("isWalking", false);
         }
 
         //Run
@@ -129,11 +130,12 @@ public class PlayerController : MonoBehaviour
             PlayerAnimator.SetBool("isRun", false);
         }
 
-        //Kick
-        if(Input.GetKeyDown(KeyCode.G)){
-            PlayerAnimator.SetBool("coudKick", true);
-        }else{
-            PlayerAnimator.SetBool("coudKick", false);
+        //Jump
+        if(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftControl)){
+            PlayerAnimator.SetBool("canJump", true);
+        }
+        if(Input.GetKeyUp(KeyCode.Space)){
+            PlayerAnimator.SetBool("canJump", false);
         }
 
     }
