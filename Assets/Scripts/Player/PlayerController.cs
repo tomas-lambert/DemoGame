@@ -5,22 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-
+    [SerializeField] protected PlayerData myData;
     // Variables -------------------------------->
 
-    //Player Speed
-    [SerializeField] private float playerSpeed = 10f;
-    [SerializeField] private float playerSprintSpeed = 1.5f;
-
-    
     //Time To Jump
     private float resetJumpTimer = 0f;
-    [SerializeField] private float cooldownJump = 2f;
     private bool jumpOn = false;
-    [SerializeField] private float JumpHeigth = 2f;
-
-    //Gravity Force
-    [SerializeReference] private float GravityForce = -9.81f;
     private Vector3 velocity;
 
     //Camera Axis
@@ -63,11 +53,11 @@ public class PlayerController : MonoBehaviour
         if (ejeHorizontal !=0 || ejeVertical !=0)
         {
             //transform.Translate(playerSpeed * Time.deltaTime * new Vector3(ejeHorizontal, 0, ejeVertical ));
-            ccPlayer.Move(playerSpeed * Time.deltaTime * transform.TransformDirection(new Vector3(ejeHorizontal, 0, ejeVertical )));
+            ccPlayer.Move(myData.playerSpeed * Time.deltaTime * transform.TransformDirection(new Vector3(ejeHorizontal, 0, ejeVertical )));
         }
 
         if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftControl)){
-             ccPlayer.Move((playerSpeed * playerSprintSpeed) * Time.deltaTime * transform.TransformDirection(new Vector3(ejeHorizontal, 0, ejeVertical )));
+             ccPlayer.Move((myData.playerSpeed * myData.playerSprintSpeed) * Time.deltaTime * transform.TransformDirection(new Vector3(ejeHorizontal, 0, ejeVertical )));
         }
         
     }
@@ -79,7 +69,7 @@ public class PlayerController : MonoBehaviour
         {
             resetJumpTimer += Time.deltaTime;
         }
-        if (resetJumpTimer > cooldownJump)
+        if (resetJumpTimer > myData.cooldownJump)
         {
             jumpOn = false;
             resetJumpTimer = 0f;
@@ -89,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftControl)){
             jumpOn = true;
-            velocity.y = Mathf.Sqrt(-JumpHeigth * GravityForce);
+            velocity.y = Mathf.Sqrt(-myData.JumpHeigth * myData.GravityForce);
             
         }else{
             PlayerAnimator.SetBool("canJump", false);
@@ -100,7 +90,7 @@ public class PlayerController : MonoBehaviour
     //Player Gravity
 
     public void PlayerGravity(){
-        velocity.y += GravityForce * Time.deltaTime;
+        velocity.y += myData.GravityForce * Time.deltaTime;
      
         ccPlayer.Move( velocity * Time.deltaTime);
     }
