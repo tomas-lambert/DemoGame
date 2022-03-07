@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     //Player Speed
     [SerializeField] private float playerSpeed = 10f;
     [SerializeField] private float playerSprintSpeed = 1.5f;
+
+    
     //Time To Jump
     private float resetJumpTimer = 0f;
     [SerializeField] private float cooldownJump = 2f;
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
         PlayerJump();
         JumpCooldownVerification();
         AnimationValidation();
+        PlayerisDeadByBullet();
     }
 
       //Methods -------------------------------------------------------------------------------->
@@ -81,9 +84,6 @@ public class PlayerController : MonoBehaviour
             jumpOn = false;
             resetJumpTimer = 0f;
         }
-
-        Debug.Log(jumpOn);
-        Debug.Log(resetJumpTimer);
     }
     public void PlayerJump(){
 
@@ -112,6 +112,19 @@ public class PlayerController : MonoBehaviour
         transform.localRotation = angulo;
 
     }
+    // Player Die
+    private Vector3 SavePointDieCase;
+    private void PlayerisDeadByBullet(){
+        if(GameManager.instance.playerLives == 0){
+            GameManager.instance.playerLives += 3;
+            SavePointDieCase = FindObjectOfType<SavePointsManager>().GetSavePoint(GameManager.instance.lastSavePoint).position;
+            Debug.Log(SavePointDieCase);
+            transform.position = SavePointDieCase;
+            
+
+            
+        }
+    }
 
     //Collitions -------------------------------------------------------------------->
 
@@ -121,7 +134,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("You Dead");
             transform.position = FindObjectOfType<SavePointsManager>().GetSavePoint(GameManager.instance.lastSavePoint).position;
-        } 
+        }
+               
     }
 
     // With Save Point
@@ -132,7 +146,12 @@ public class PlayerController : MonoBehaviour
             SavePointsManager managerSavePoint = other.transform.parent.GetComponent<SavePointsManager>();
             managerSavePoint.FindSavePoint(other.name);
         }
+         if(other.gameObject.CompareTag("Bullet")){
+            GameManager.instance.playerLives -= 1;
+            Debug.Log("Bullet Hit");
+        } 
     }
+   
      //Animations -------------------------------------------------------------------->
 
     private void AnimationValidation(){

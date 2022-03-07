@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Void
   - SavePoint
+  - Bullet
   layers:
   - Default
   - TransparentFX
