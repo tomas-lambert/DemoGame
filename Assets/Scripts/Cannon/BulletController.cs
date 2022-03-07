@@ -7,16 +7,16 @@ public class BulletController : MonoBehaviour
 
     // Variables ------------------------------------------------------------------>
 
-    [SerializeField] private float startForce = 10f;
-    [SerializeField] private float torqueForce = 100f;
-    private float timeOfBullet = 5f;
+    [SerializeField] protected float startForce = 10f;
+    
+    private float timeOfBullet = 2.5f;
 
-    private Rigidbody rbBullet;
+    protected Rigidbody rbBullet;
     // Start is called before the first frame update
     void Start()
     {
         rbBullet = GetComponent<Rigidbody>();
-        rbBullet.AddRelativeForce(Vector3.forward * startForce * 100f);
+        BulletForce();
     }
 
     // Update is called once per frame
@@ -25,12 +25,6 @@ public class BulletController : MonoBehaviour
         bulletDestroy();
     }
 
-   private void OnTriggerEnter(Collider other) {
-       if(other.gameObject.CompareTag("Void")){
-           Destroy(gameObject);
-       }
-   }
-
     private void bulletDestroy()
     {
        timeOfBullet -= Time.deltaTime;
@@ -38,5 +32,9 @@ public class BulletController : MonoBehaviour
            Destroy(gameObject);
        }
         
+    }
+
+    public virtual void BulletForce(){
+        rbBullet.AddRelativeForce(Vector3.forward * startForce * 100f);
     }
 }
