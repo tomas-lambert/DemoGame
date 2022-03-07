@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
     //Player Elements
     private CharacterController ccPlayer;
 
+    //Win Popup
+
+    [SerializeField] private GameObject WinPopup;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -107,9 +111,7 @@ public class PlayerController : MonoBehaviour
     private void PlayerisDeadByBullet(){
         if(GameManager.instance.playerLives == 0){
             GameManager.instance.playerLives += 3;
-            SavePointDieCase = FindObjectOfType<SavePointsManager>().GetSavePoint(GameManager.instance.lastSavePoint).position;
-            Debug.Log(SavePointDieCase);
-            transform.position = SavePointDieCase;
+            SceneManager.LoadScene("Tutorial");
             
 
             
@@ -128,17 +130,28 @@ public class PlayerController : MonoBehaviour
                
     }
 
-    // With Save Point
+   
      private void OnTriggerEnter(Collider other) {
+
+          // With Save Point
          if (other.gameObject.CompareTag("SavePoint"))
         {
             Debug.Log("Save Progress");
             SavePointsManager managerSavePoint = other.transform.parent.GetComponent<SavePointsManager>();
             managerSavePoint.FindSavePoint(other.name);
         }
+
+        //With Bullet
          if(other.gameObject.CompareTag("Bullet")){
             GameManager.instance.playerLives -= 1;
             Debug.Log("Bullet Hit");
+        }
+
+        //With Win Flag
+         if(other.gameObject.CompareTag("WinFlag")){
+            
+            WinPopup.SetActive(true);
+            Debug.Log("YOU WIN!!!♥♥");
         } 
     }
    
